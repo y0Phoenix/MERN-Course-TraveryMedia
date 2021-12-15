@@ -7,11 +7,10 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const User = require('../../models/User');
-const { response } = require('express');
 
-// Post     api/users
-// desc     register user route
-// access   Public
+// @post     api/users
+// @desc     register user route
+// @access   Public
 router.post('/', [ check('name', 'Name is Required').not().isEmpty(),
 check('email', 'Please Enter A Valid Email').isEmail(),
 check('password', 'Please enter a password with 6 or more chars').isLength({min: 6})

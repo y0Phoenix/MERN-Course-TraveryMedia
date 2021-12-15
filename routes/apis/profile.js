@@ -5,9 +5,9 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
 
-// get      api/profile/me
-// desc     get current user profile
-// access   Private
+// @get      api/profile/me
+// @desc     get current user profile
+// @access   Private
 router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);
@@ -22,9 +22,9 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
-// post     api/profile
-// desc     create or update user profile
-// access   Private
+// @post     api/profile
+// @desc     create or update user profile
+// @access   Private
 router.post('/', [auth, 
         [
             check('status', 'Status is Required').not().isEmpty(),
@@ -96,9 +96,9 @@ router.post('/', [auth,
         }
 });
 
-// get      api/profile
-// desc     get all profiles
-// access   Public
+// @get      api/profile
+// @desc     get all profiles
+// @access   Public
 router.get('/', async (req, res) => {
     try {
         const profiles = await Profile.find().populate('user', ['name', 'avatar']);
@@ -109,9 +109,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-// get      api/profile/user/:user_id
-// desc     get profile by user id
-// access   Private
+// @get      api/profile/user/:user_id
+// @desc     get profile by user id
+// @access   Private
 router.get('/user/:user_id', async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
@@ -129,9 +129,9 @@ router.get('/user/:user_id', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-// delete   api/profile/
-// desc     delete profile user and posts
-// access   Private
+// @delete   api/profile/
+// @desc     delete profile user and posts
+// @access   Private
 router.delete('/', auth, async (req, res) => {
     try {
         // remove profile

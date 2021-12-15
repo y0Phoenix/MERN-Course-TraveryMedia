@@ -8,9 +8,9 @@ const bc = require('bcryptjs');
 const config = require('config');
 
 
-// get      api/auth
-// desc     Test route
-// access   Public
+// @get      api/auth
+// @desc     Test route
+// @access   Public
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -22,9 +22,9 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
-// Post     api/auth
-// desc     authenticate user and get token
-// access   Public
+// @Post     api/auth
+// @desc     authenticate user and get token
+// @access   Public
 router.post('/', [
     check('email', 'Please Enter A Valid Email').isEmail(),
     check('password', 'Password is required').exists()
