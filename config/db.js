@@ -4,8 +4,10 @@ const db = config.get('mongoURI');
 
 const connectDB = async () => {
     try {
-       await mon.connect(db, { useNewUrlParser: true });
-       console.log('Connected To MongoDb');
+        await mon.connect(db, { 
+            useNewUrlParser: true,
+        });
+        console.log('Connected To MongoDb');
     }
     catch(err) {
         console.error(err.message);

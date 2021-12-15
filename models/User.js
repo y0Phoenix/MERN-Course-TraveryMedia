@@ -1,6 +1,6 @@
 const mon = require('mongoose');
 
-const UserSchema = new new mon.Schema({
+const UserSchema = new mon.Schema({
     name: {
         type: String,
         required: true
@@ -22,4 +22,4 @@ const UserSchema = new new mon.Schema({
         default: Date.now
     }
 });
-module.exports = User = mon.Mongoose.module('user', UserSchema);
+module.exports = User = mon.model('user', UserSchema);
