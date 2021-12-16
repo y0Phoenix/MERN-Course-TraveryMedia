@@ -4,10 +4,12 @@ const auth = require('../../middleware/auth')
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
+const { findOne } = require('../../models/User');
 
 // @get      api/profile/me
 // @desc     get current user profile
 // @access   Private
+
 router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);
@@ -129,20 +131,67 @@ router.get('/user/:user_id', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-// @delete   api/profile/
-// @desc     delete profile user and posts
-// @access   Private
+// @delete      api/profile/
+// @desc        delete profile and user
+// @access      Private
+
 router.delete('/', auth, async (req, res) => {
     try {
         // remove profile
-        // @todo - remove user posts
+        // todo - remove user posts
         await User.findOneAndRemove({ _id: req.user.id });
         await Profile.findOneAndRemove({ user: req.user.id });
         res.json({ msg: 'user deleted' });
         
     } catch (err) {
-        
+        console.error(err);
+        res.status(400).send('Server Error');
     }
 })
+// @put     api/profile/experience
+// @desc    add profile experiece
+// @access  Private
+router.put('/experience', [auth,[
+    check('title', 'Title is required').not().isEmpty(),
+    check('company', 'Company is required').not().isEmpty(),
+    check('from', 'From date is required').not().isEmpty(),
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() }) ;
+    }
+
+    const {
+        title,
+        comapny,
+        location,
+        company,
+        from,
+        to,
+        current,
+        description
+    } = req.body;
+
+    const newExp = {
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description
+    };
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        profile.experience.unshift(newExp);
+
+        await profile.save();
+        res.json(profile);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;
