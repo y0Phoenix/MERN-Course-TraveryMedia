@@ -158,4 +158,58 @@ router.put('/unlike/:id', auth, async (req, res) => {
     }
 });
 
+// @post     api/post/comment/:id
+// @desc     comment on a post
+// @access   Private
+router.post('/comment/:id', [auth, [
+    check('text', 'Text Is Required').not().isEmpty()
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const post = await Post.findById(req.params.id);
+
+        const newComment = {
+            text: req.body.text,
+            name: user.name,
+            avatar: user.avatar,
+            user: req.user.id
+        };
+        post.comments.unshift(newComment)
+
+        await post.save();
+
+        res.json(post.comments);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+    
+
+});
+
+// @delete   api/post/comment/:id/:comment_id
+// @desc     delete comment
+// @access   Private
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+    try {
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
+try {
+const user = await User.findById();
+}
+catch(err) {
+console.error(err);
+res.status(500).send('Server Error');
+}
+
 module.exports = router;
