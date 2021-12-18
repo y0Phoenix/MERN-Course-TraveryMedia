@@ -3,6 +3,7 @@ import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import Dashboard from './components/dashboards/Dashboard';
 import Alert from './components/layout/Alert';
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -34,6 +35,7 @@ const App = () => {
             <Routes>
               <Route exact path='/register' element={<Register />} />
               <Route exact path='/login' element={<Login />} />
+              <Route exact path='/dashboard' element={<Dashboard />} />
             </Routes>
           </section>
         </Fragment>
