@@ -5,23 +5,28 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// redux
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   return (
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Landing />} />
-        </Routes>
-        <section className='container'>
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
           <Routes>
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/' element={<Landing />} />
           </Routes>
-        </section>
-      </Fragment>
-    </Router>
+          <section className='container'>
+            <Routes>
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+            </Routes>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>
   );
 };
 
