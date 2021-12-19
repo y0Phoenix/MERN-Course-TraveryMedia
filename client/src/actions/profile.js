@@ -12,7 +12,7 @@ export const getCurrentProfile = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.res.statusText, status: err.response.status },
+      payload: { msg: err.res, status: err.response.status },
     });
   }
 };

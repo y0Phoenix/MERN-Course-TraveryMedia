@@ -1,21 +1,45 @@
-import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({ auth, logout, getCurrentProfile, profile }) => {
+const Dashboard = ({
+  auth: { isAuthenticated, user },
+  logout,
+  getCurrentProfile,
+  profile: { profile, loading },
+}) => {
   // get user profile
   useEffect(() => {
     getCurrentProfile();
   }, []);
-  if (auth.isAuthenticated) {
-    return <div>Dashboard</div>;
+  if (isAuthenticated) {
+    return loading && profile === null ? (
+      <Spinner />
+    ) : (
+      <Fragment>
+        <h1 className='large text-primary'>Dashboard</h1>
+        <p className='lead'>
+          <i className='fa fa-user'>Welcome {user && user.name}</i>
+        </p>
+        {profile !== null ? (
+          <Fragment>Has</Fragment>
+        ) : (
+          <Fragment>
+            <p>You have not yet setup a profile, please add some info</p>
+            <Link to='/create-profile' className='btn btn-primary my-1'>
+              Create Profile
+            </Link>
+          </Fragment>
+        )}
+      </Fragment>
+    );
   } else {
     return <Navigate to='/login' />;
   }
-  return <div>Dashboard</div>;
 };
 
 Dashboard.propTypes = {
