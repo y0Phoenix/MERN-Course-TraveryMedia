@@ -1,14 +1,9 @@
-import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
-import { loadUser } from '../../actions/auth';
 
-export const privateRoute = (
-  { auth: { isAuthenticated, loading, token } },
-  logout
-) => {
+const privateRoute = (auth, logout) => {
+  const { isAuthenticated, loading, token } = auth;
   if (isAuthenticated && !loading) {
     return token;
   } else {
@@ -25,4 +20,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-connect(mapStateToProps, { logout })(privateRoute);
+export default connect(mapStateToProps, { logout })(privateRoute);
