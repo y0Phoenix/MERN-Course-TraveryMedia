@@ -10,14 +10,9 @@ import {
   LOGOUT,
   CLEAR_PROFILE,
 } from './types';
-import setAuthToken from '../utils/setAuthToken';
 
 // load user
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
-
   try {
     const res = await axios.get('http://localhost:5000/api/auth');
 
@@ -30,7 +25,6 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: AUTH_ERROR,
     });
-    console.error(err);
   }
 };
 
@@ -84,6 +78,7 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
+    console.log('sending post request to api/auth');
     const res = await axios.post(
       'http://localhost:5000/api/auth',
       body,

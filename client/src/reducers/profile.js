@@ -13,24 +13,14 @@ export default function profile(state = initialState, action) {
 
   switch (type) {
     case GET_PROFILE:
-      return {
-        ...state,
-        profile: payload,
-        loading: false,
-      };
+      state = {...state, profile: payload, loading: false};
+      return state
     case PROFILE_ERROR:
-      return {
-        ...state,
-        error: payload,
-        loading: false,
-      };
+      state = {...state, error: payload, loading: false};
+      return state
     case CLEAR_PROFILE:
-      return {
-        ...state,
-        profile: null,
-        repos: [],
-        loading: false,
-      };
+      state = {...state, profile: null, repos: [], loading: false}
+      return state;
     default:
       return state;
   }
