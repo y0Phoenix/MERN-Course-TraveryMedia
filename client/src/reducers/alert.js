@@ -1,8 +1,6 @@
 import {
   SET_ALERT,
-  REMOVE_ALERT,
-  USER_LOADED,
-  AUTH_ERROR,
+  REMOVE_ALERT
 } from '../actions/types';
 const initialState = [];
 

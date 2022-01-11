@@ -3,12 +3,11 @@ import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
-import { logout } from '../../actions/auth';
 import { getCurrentProfile } from '../../actions/profile';
+import getState from '../../store/getAuth';
 
 const Dashboard = ({
   auth: { isAuthenticated, user },
-  logout,
   getCurrentProfile,
   profile: { profile, loading },
 }) => {
@@ -43,7 +42,6 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
-  logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
@@ -54,6 +52,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { logout, getCurrentProfile })(
+export default connect(mapStateToProps, {getCurrentProfile})(
   Dashboard
 );
