@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { setAlert } from './alert';
 import { GET_PROFILE, PROFILE_ERROR } from './types';
 
 // get user profile
@@ -14,3 +14,30 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
   }
 };
+
+// create or update profile
+export const createProfile = (formData, history, edit = false) => async dispatch => {
+  try {
+    const config = {
+      header: {
+        "Content-Type": 'application.json'
+      }
+    }
+
+    const res = await axios.post('http://localhost:5000/api/profile', formData, config);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created'));
+
+    if (!edit) {
+      history.push('/dashboard');
+    }
+    
+  } catch (err) {
+    
+  }
+}
