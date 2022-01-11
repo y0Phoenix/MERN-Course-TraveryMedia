@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import { getCurrentProfile } from '../../actions/profile';
-import getState from '../../store/getAuth';
 
 const Dashboard = ({
   auth: { isAuthenticated, user },

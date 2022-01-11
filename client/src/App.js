@@ -38,7 +38,7 @@ const App = () => {
                 <Route exact path='/login' element={<Login />} />
                 <Route element={<ProtectedRoute />}>
                     <Route exact path='/dashboard' element={<Dashboard/>} />
-                    <Route exact path='/dashboard' element={<CreateProfile/>} />
+                    <Route exact path='/create-profile' element={<CreateProfile/>} />
                 </Route>
               </Route>
             </Routes>

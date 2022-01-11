@@ -21,7 +21,6 @@ const Login = ({ login, isAuthenticated }) => {
   };
 
   // redirect if logged in
-  console.log(isAuthenticated);
   if (isAuthenticated) {
     return <Navigate to='/dashboard' />;
   }
