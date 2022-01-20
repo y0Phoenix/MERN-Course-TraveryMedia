@@ -1,0 +1,1 @@
+add animation from the side for the about me page

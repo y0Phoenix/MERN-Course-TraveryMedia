@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import { GET_PROFILE, PROFILE_ERROR } from './types';
+import { useNavigate } from 'react-router-dom';
 
 // get user profile
 export const getCurrentProfile = () => async (dispatch) => {
@@ -31,13 +32,25 @@ export const createProfile = (formData, history, edit = false) => async dispatch
       payload: res.data
     });
 
-    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created'));
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
+
+    let navigate = useNavigate();
 
     if (!edit) {
-      history.push('/dashboard');
+      navigate(-1);
     }
     
   } catch (err) {
-    
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) =>
+        dispatch(setAlert(error.msg, 'danger'), 7500)
+      ); 
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.res, status: err.response.status },
+    });
   }
 }

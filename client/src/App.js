@@ -1,4 +1,4 @@
-// import './App.css';
+import './App.css';
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Index } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
