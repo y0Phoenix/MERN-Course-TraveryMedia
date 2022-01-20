@@ -10,6 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import Dashboard from './components/dashboards/Dashboard'
 import CreateProfile from './components/profile-forms/CreateProfile'
 import Container from './routes/Container';
+import EditProfile from './components/profile-forms/Edit-Profile';
 // redux
 import { Provider } from 'react-redux';
 import setAuthToken from './utils/setAuthToken';
@@ -30,7 +31,6 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-            <Alert />
             <Routes>
               <Route exact path='/' element={<Landing />} />
               <Route element={<Container/>}>
@@ -39,6 +39,7 @@ const App = () => {
                 <Route element={<ProtectedRoute />}>
                     <Route exact path='/dashboard' element={<Dashboard/>} />
                     <Route exact path='/create-profile' element={<CreateProfile/>} />
+                    <Route exact path='/edit-profile' element={<EditProfile />} />
                 </Route>
               </Route>
             </Routes>

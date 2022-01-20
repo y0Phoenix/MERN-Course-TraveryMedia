@@ -33,14 +33,9 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     });
 
     dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
-
-    let navigate = useNavigate();
-
-    if (!edit) {
-      navigate(-1);
-    }
     
   } catch (err) {
+    console.log(err);
     const errors = err.response.data.errors;
 
     if (errors) {
